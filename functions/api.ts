@@ -31,7 +31,7 @@ const PORT: number = 3000;
  * */
 app.use(express.json());
 app.use(cors());
-app.use("/.netlify/function/api", router);
+app.use("/.netlify/functions/api", router);
 
 /**
  * This is the post request that is supposed to handle
