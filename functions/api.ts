@@ -42,7 +42,7 @@ app.use("/.netlify/functions/api", router);
  * @param {string} path
  * @param {Function} annonymous
  * */
-app.post("/query", (req: ExpressRequest, res: ExpressResponse) => {
+router.post("/query", (req: ExpressRequest, res: ExpressResponse) => {
   const body: { query: string } = req.body;
   const connection: Connection = new Connection(config);
 
