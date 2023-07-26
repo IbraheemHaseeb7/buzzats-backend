@@ -9,6 +9,7 @@ import { config } from "../SupportingFiles/Connection";
 import { makeRequest } from "../SupportingFiles/DatabaseRequest";
 import { QueryResponse } from "../interfaces/QueryResponse";
 import serverless from "serverless-http";
+import { sendEmail } from "../SupportingFiles/Sendgrid";
 
 /**
  * Initalizing the express app so we can
@@ -61,6 +62,25 @@ router.post("/query", (req: ExpressRequest, res: ExpressResponse) => {
       });
     }
   });
+});
+
+/**
+ *
+ * This mail route is used to send OTP code to the users on their email
+ * addresses that they enter while signing up on the buzzats application.
+ * This can then be used to verify if the user is from comsats or not.
+ * */
+router.post("/mail", async (req: ExpressRequest, res: ExpressResponse) => {
+  const body: { email: string; code: string } = req.body;
+
+  // promise is used to verify what response to send to the client
+  await sendEmail(body.email, body.code)
+    .then((result: any) => {
+      return res.status(200).send({ description: "Email sent Successfully" });
+    })
+    .catch((error: Error) => {
+      return res.status(500).send({ description: "Email could not be sent" });
+    });
 });
 
 /**
