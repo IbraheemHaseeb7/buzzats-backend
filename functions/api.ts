@@ -47,17 +47,16 @@ router.post("/query", (req: ExpressRequest, res: ExpressResponse) => {
   const body: { query: string } = req.body;
   const connection: Connection = new Connection(config);
 
-  connection.connect((error: Error | undefined) => {
+  connection.connect(async (error: Error | undefined) => {
     if (error) {
       // sends server error response
       res.status(500).send({
-        data: [],
         status: 500,
         description: "Connection could not be established to the server",
       } as QueryResponse);
     } else {
       // successfully request being proceeded
-      makeRequest(body.query, connection, (resp: QueryResponse) => {
+      await makeRequest(body.query, connection, (resp: QueryResponse) => {
         res.status(resp.status).send(resp);
       });
     }

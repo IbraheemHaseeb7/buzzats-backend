@@ -13,13 +13,13 @@ export const config: ConnectionConfig = {
   authentication: {
     type: "default",
     options: {
-      userName: process.env.USERNAME,
+      userName: process.env.NAME,
       password: process.env.PASSWORD,
     },
   },
   options: {
     // If you are on Microsoft Azure, you need encryption:
-    encrypt: false,
+    encrypt: true,
     database: process.env.DATABASE,
   },
 };

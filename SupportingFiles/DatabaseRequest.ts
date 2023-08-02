@@ -1,5 +1,6 @@
 import { ColumnValue, Connection, Request } from "tedious";
 import { QueryResponse } from "../interfaces/QueryResponse";
+import { Column } from "../interfaces/Column";
 
 /**
  *
@@ -18,7 +19,7 @@ export async function makeRequest(
   callback: Function
 ) {
   // stores the result that is returned via callback function
-  const result: ColumnValue[] = [];
+  const result: Column[] = [];
   const request: Request = new Request(
     path,
     (error: Error, rowCount: number, rows: any[]) => {
@@ -43,11 +44,11 @@ export async function makeRequest(
 
   // successful response
   request.on("row", (columns: ColumnValue[]) => {
-    let temp: any;
+    let temp: Column = {};
 
-    columns.forEach((column: ColumnValue) => {
+    for (let column of columns) {
       temp[column.metadata.colName] = column.value;
-    });
+    }
 
     result.push(temp);
   });
@@ -59,6 +60,7 @@ export async function makeRequest(
       data: result,
       description: "Your request was successfully proceeded",
     } as QueryResponse);
+    // connection.close();
     return;
   });
 

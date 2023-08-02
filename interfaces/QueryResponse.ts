@@ -8,6 +8,6 @@
 
 export interface QueryResponse {
   status: number;
-  data: any;
-  description?: string | Error;
+  data?: any;
+  description: string | Error;
 }
