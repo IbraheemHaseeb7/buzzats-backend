@@ -43,25 +43,25 @@ app.use("/.netlify/functions/api", router);
  * @param {string} path
  * @param {Function} annonymous
  * */
-router.post("/query", (req: ExpressRequest, res: ExpressResponse) => {
-  const body: { query: string } = req.body;
-  const connection: Connection = new Connection(config);
+// router.post("/query", (req: ExpressRequest, res: ExpressResponse) => {
+//   const body: { query: string } = req.body;
+//   const connection: Connection = new Connection(config);
 
-  connection.connect(async (error: Error | undefined) => {
-    if (error) {
-      // sends server error response
-      res.status(500).send({
-        status: 500,
-        description: "Connection could not be established to the server",
-      } as QueryResponse);
-    } else {
-      // successfully request being proceeded
-      await makeRequest(body.query, connection, (resp: QueryResponse) => {
-        res.status(resp.status).send(resp);
-      });
-    }
-  });
-});
+//   connection.connect(async (error: Error | undefined) => {
+//     if (error) {
+//       // sends server error response
+//       res.status(500).send({
+//         status: 500,
+//         description: "Connection could not be established to the server",
+//       } as QueryResponse);
+//     } else {
+//       // successfully request being proceeded
+//       await makeRequest(body.query, connection, (resp: QueryResponse) => {
+//         res.status(resp.status).send(resp);
+//       });
+//     }
+//   });
+// });
 
 /**
  *
